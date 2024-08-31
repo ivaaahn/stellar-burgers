@@ -9,14 +9,15 @@ import {
   Register,
   ResetPassword
 } from '@pages';
-import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import '../../index.css';
 import styles from './app.module.css';
+
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { ProtectedRoute } from '../protected-route';
+import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
-import { getUserThunk } from 'src/services/slices/userSlice';
-import { useDispatch } from 'src/services/store';
+import { ProtectedRoute } from '../protected-route';
+import { getUserThunk } from '../../services/slices/userSlice';
 import { getIngredientsThunk } from 'src/services/slices/ingredientsSlice';
 
 const App = () => {
@@ -36,7 +37,10 @@ const App = () => {
       <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/ingredients/:id' element={<IngredientDetails />} />
-        <Route path='/feed' element={<Feed />} />
+        <Route path='/feed'>
+          <Route index element={<Feed />} />
+          <Route path=':number' element={<OrderInfo />} />
+        </Route>
         <Route
           path='/login'
           element={
@@ -69,23 +73,34 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path='/profile'
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path='/profile/orders'
-          element={
-            <ProtectedRoute>
-              <ProfileOrders />
-            </ProtectedRoute>
-          }
-        />
-
+        <Route path='/profile'>
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='orders'>
+            <Route
+              index
+              element={
+                <ProtectedRoute>
+                  <ProfileOrders />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path=':number'
+              element={
+                <ProtectedRoute>
+                  <OrderInfo />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
         <Route path='*' element={<NotFound404 />} />
       </Routes>
 
