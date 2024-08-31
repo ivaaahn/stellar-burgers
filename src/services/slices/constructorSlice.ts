@@ -6,8 +6,8 @@ import {
   SerializedError
 } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
-import { v4 as uuid4} from 'uuid';
-import {ingredientsSlice} from "src/services/slices/ingredientsSlice";
+import { v4 as uuid4 } from 'uuid';
+import { ingredientsSlice } from 'src/services/slices/ingredientsSlice';
 
 interface ConstructorState {
   bun: TConstructorIngredient | null;

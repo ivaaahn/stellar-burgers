@@ -1,18 +1,18 @@
-import {useSelector} from '../../services/store';
+import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
 
-import {BurgerIngredients} from '../../components';
-import {BurgerConstructor} from '../../components';
-import {Preloader} from '../../components/ui';
-import {FC} from 'react';
-import {selectIngredientsIsLoading} from '../../services/slices/ingredientsSlice'
+import { BurgerIngredients } from '../../components';
+import { BurgerConstructor } from '../../components';
+import { Preloader } from '../../components/ui';
+import { FC } from 'react';
+import { selectIngredientsIsLoading } from '../../services/slices/ingredientsSlice';
 
 export const ConstructorPage: FC = () => {
   const isIngredientsLoading = useSelector(selectIngredientsIsLoading);
 
   if (isIngredientsLoading) {
-    return <Preloader/>
+    return <Preloader />;
   }
 
   return (
@@ -23,9 +23,9 @@ export const ConstructorPage: FC = () => {
         Соберите бургер
       </h1>
       <div className={`${styles.main} pl-5 pr-5`}>
-        <BurgerIngredients/>
-        <BurgerConstructor/>
+        <BurgerIngredients />
+        <BurgerConstructor />
       </div>
     </main>
-  )
+  );
 };

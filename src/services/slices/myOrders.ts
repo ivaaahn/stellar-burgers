@@ -1,7 +1,7 @@
-import {getOrdersApi} from '@api';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {TOrder} from '@utils-types';
-import {feed} from "src/services/slices/feed";
+import { getOrdersApi } from '@api';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TOrder } from '@utils-types';
+import { feed } from 'src/services/slices/feed';
 
 interface myOrdersState {
   isLoading: boolean;
@@ -38,8 +38,6 @@ export const myOrdersSlice = createSlice({
   }
 });
 
-export const {selectProfileOrders, selectIsLoading} =
-  myOrdersSlice.selectors;
-
+export const { selectProfileOrders, selectIsLoading } = myOrdersSlice.selectors;
 
 export const myOrdersReducer = myOrdersSlice.reducer;

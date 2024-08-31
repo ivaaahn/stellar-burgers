@@ -1,5 +1,5 @@
-import {setCookie, getCookie, deleteCookie} from './cookie';
-import {TIngredient, TOrder, TOrdersData, TUser} from './types';
+import { setCookie, getCookie, deleteCookie } from './cookie';
+import { TIngredient, TOrder, TOrdersData, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
 
@@ -14,7 +14,6 @@ type TRefreshResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
 }>;
-
 
 function saveTokens(accessToken: string, refreshToken: string) {
   setCookie('accessToken', accessToken);
@@ -41,7 +40,7 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      saveTokens(refreshData.accessToken, refreshData.refreshToken)
+      saveTokens(refreshData.accessToken, refreshData.refreshToken);
       return refreshData;
     });
 
@@ -250,7 +249,8 @@ export const logoutApi = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
     })
-  }).then((res) => checkResponse<TServerResponse<{}>>(res))
+  })
+    .then((res) => checkResponse<TServerResponse<{}>>(res))
     .then((data) => {
       if (!data?.success) {
         return Promise.reject(data);
@@ -259,5 +259,3 @@ export const logoutApi = () =>
       removeTokens();
       return data;
     });
-
-

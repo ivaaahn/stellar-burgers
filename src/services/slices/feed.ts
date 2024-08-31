@@ -1,7 +1,7 @@
 import { getFeedsApi, getOrdersApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TOrder } from '@utils-types';
-import {userSlice} from "src/services/slices/userSlice";
+import { userSlice } from 'src/services/slices/userSlice';
 
 interface OrdersState {
   isLoading: boolean;

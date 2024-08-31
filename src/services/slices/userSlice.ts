@@ -1,18 +1,26 @@
-import {TUser} from '@utils-types';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {getUserApi, loginUserApi, logoutApi, registerUserApi, updateUserApi} from '@api';
+import { TUser } from '@utils-types';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  getUserApi,
+  loginUserApi,
+  logoutApi,
+  registerUserApi,
+  updateUserApi
+} from '@api';
 
 export const loginUserThunk = createAsyncThunk('user/login', loginUserApi);
-export const registerUserThunk = createAsyncThunk('user/register', registerUserApi)
+export const registerUserThunk = createAsyncThunk(
+  'user/register',
+  registerUserApi
+);
 export const getUserThunk = createAsyncThunk('user/getuser', getUserApi);
 export const updateUserThunk = createAsyncThunk('user/update', updateUserApi);
-export const logoutUserThunk = createAsyncThunk('user/logout', logoutApi)
-
+export const logoutUserThunk = createAsyncThunk('user/logout', logoutApi);
 
 export enum UserStatus {
   NOT_AUTHORIZED = 'NOT_AUTHORIZED',
   LOGGED_IN = 'LOGGED_IN',
-  CHECKING = 'CHECKING',
+  CHECKING = 'CHECKING'
 }
 
 export interface TUserState {
@@ -91,7 +99,7 @@ export const userSlice = createSlice({
         state.error = '';
         state.status = UserStatus.CHECKING;
       });
-      builder
+    builder
       .addCase(logoutUserThunk.fulfilled, (state, action) => {
         state.status = UserStatus.NOT_AUTHORIZED;
         state.error = '';
@@ -106,5 +114,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const {getUser, getUserError, getUserStatus} = userSlice.selectors;
+export const { getUser, getUserError, getUserStatus } = userSlice.selectors;
 export const userReducer = userSlice.reducer;

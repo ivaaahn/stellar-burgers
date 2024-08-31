@@ -1,14 +1,14 @@
-import {useState, useRef, useEffect, FC, useMemo} from 'react';
-import {useInView} from 'react-intersection-observer';
+import { useState, useRef, useEffect, FC, useMemo } from 'react';
+import { useInView } from 'react-intersection-observer';
 
-import {TTabMode} from '@utils-types';
-import {BurgerIngredientsUI} from '../ui/burger-ingredients';
-import {useSelector} from '../../services/store';
+import { TTabMode } from '@utils-types';
+import { BurgerIngredientsUI } from '../ui/burger-ingredients';
+import { useSelector } from '../../services/store';
 import {
   selectIngredients,
   selectIngredientsIsLoading
 } from '../../services/slices/ingredientsSlice';
-import {Preloader} from '@ui';
+import { Preloader } from '@ui';
 
 export const BurgerIngredients: FC = () => {
   const ingredients = useSelector(selectIngredients);
@@ -55,15 +55,15 @@ export const BurgerIngredients: FC = () => {
   const onTabClick = (tab: string) => {
     setCurrentTab(tab as TTabMode);
     if (tab === 'bun')
-      titleBunRef.current?.scrollIntoView({behavior: 'smooth'});
+      titleBunRef.current?.scrollIntoView({ behavior: 'smooth' });
     if (tab === 'main')
-      titleMainRef.current?.scrollIntoView({behavior: 'smooth'});
+      titleMainRef.current?.scrollIntoView({ behavior: 'smooth' });
     if (tab === 'sauce')
-      titleSaucesRef.current?.scrollIntoView({behavior: 'smooth'});
+      titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   if (isLoading) {
-    return <Preloader/>;
+    return <Preloader />;
   }
 
   return (

@@ -1,16 +1,16 @@
-import {FC, useEffect, useMemo} from 'react';
-import {Preloader} from '../ui/preloader';
-import {OrderInfoUI} from '../ui/order-info';
-import {useDispatch, useSelector} from "src/services/store";
-import {useParams} from "react-router-dom";
-import {selectIngredients} from "src/services/slices/ingredientsSlice";
-import {TIngredientsWithCount} from "src/components/order-info/type";
-import {getFeedThunk, selectOrders} from "src/services/slices/feed";
-import {selectProfileOrders} from "src/services/slices/myOrders";
+import { FC, useEffect, useMemo } from 'react';
+import { Preloader } from '../ui/preloader';
+import { OrderInfoUI } from '../ui/order-info';
+import { useDispatch, useSelector } from 'src/services/store';
+import { useParams } from 'react-router-dom';
+import { selectIngredients } from 'src/services/slices/ingredientsSlice';
+import { TIngredientsWithCount } from 'src/components/order-info/type';
+import { getFeedThunk, selectOrders } from 'src/services/slices/feed';
+import { selectProfileOrders } from 'src/services/slices/myOrders';
 
 export const OrderInfo: FC = () => {
-  const dispatch = useDispatch()
-  const {number} = useParams();
+  const dispatch = useDispatch();
+  const { number } = useParams();
   const orders = useSelector(selectOrders);
   const ingredients = useSelector(selectIngredients);
   const order = orders.find((order) => String(order.number) === number);
@@ -58,8 +58,8 @@ export const OrderInfo: FC = () => {
   }, [order, ingredients]);
 
   if (!orderInfo) {
-    return <Preloader/>;
+    return <Preloader />;
   }
 
-  return <OrderInfoUI orderInfo={orderInfo}/>;
+  return <OrderInfoUI orderInfo={orderInfo} />;
 };

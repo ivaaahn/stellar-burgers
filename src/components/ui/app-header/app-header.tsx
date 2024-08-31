@@ -1,28 +1,29 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import styles from './app-header.module.css';
-import {TAppHeaderUIProps} from './type';
+import { TAppHeaderUIProps } from './type';
 import {
   BurgerIcon,
   ListIcon,
   Logo,
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-export const AppHeaderUI: FC<TAppHeaderUIProps> = ({userName}) => {
+export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => {
   function getNavLinkStyle(tabIsActive: boolean): string {
     return tabIsActive ? styles.link : `${styles.link} ${styles.link_active}`;
   }
 
-  return (<header className={styles.header}>
+  return (
+    <header className={styles.header}>
       <nav className={`${styles.menu} p-4`}>
         <div className={styles.menu_part_left}>
           <>
             <NavLink
               to='/'
-              className={({isActive}) => getNavLinkStyle(isActive)}
+              className={({ isActive }) => getNavLinkStyle(isActive)}
             >
-              <BurgerIcon type={'primary'}/>
+              <BurgerIcon type={'primary'} />
               <p className='text text_type_main-default ml-2 mr-10'>
                 Конструктор
               </p>
@@ -31,24 +32,24 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({userName}) => {
           <>
             <NavLink
               to='/feed'
-              className={({isActive}) => getNavLinkStyle(isActive)}
+              className={({ isActive }) => getNavLinkStyle(isActive)}
             >
-              <ListIcon type={'primary'}/>
+              <ListIcon type={'primary'} />
               <p className='text text_type_main-default ml-2'>Лента заказов</p>
             </NavLink>
           </>
         </div>
         <div className={styles.logo}>
           <NavLink to='/' className={styles.logo}>
-            <Logo className=''/>
+            <Logo className='' />
           </NavLink>
         </div>
         <div className={styles.link_position_last}>
           <NavLink
             to='/profile'
-            className={({isActive}) => getNavLinkStyle(isActive)}
+            className={({ isActive }) => getNavLinkStyle(isActive)}
           >
-            <ProfileIcon type={'primary'}/>
+            <ProfileIcon type={'primary'} />
             <p className='text text_type_main-default ml-2'>
               {userName || 'Личный кабинет'}
             </p>
@@ -56,5 +57,5 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({userName}) => {
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};

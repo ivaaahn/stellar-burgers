@@ -1,7 +1,7 @@
-import {FC, useMemo} from 'react';
-import {TConstructorIngredient} from '@utils-types';
-import {BurgerConstructorUI} from '@ui';
-import {useDispatch, useSelector} from '../../services/store';
+import { FC, useMemo } from 'react';
+import { TConstructorIngredient } from '@utils-types';
+import { BurgerConstructorUI } from '@ui';
+import { useDispatch, useSelector } from '../../services/store';
 import {
   closeOrder,
   createOrderThunk,
@@ -10,8 +10,8 @@ import {
   selectOrderModalData,
   selectOrderRequest
 } from '../../services/slices/constructorSlice';
-import {useNavigate} from 'react-router-dom';
-import {getUserStatus, UserStatus} from '../../services/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { getUserStatus, UserStatus } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   const constructorItems = {
@@ -35,7 +35,11 @@ export const BurgerConstructor: FC = () => {
       return;
     }
 
-    dispatch(createOrderThunk(constructorItems.ingredients.map((ingredient) => ingredient._id)));
+    dispatch(
+      createOrderThunk(
+        constructorItems.ingredients.map((ingredient) => ingredient._id)
+      )
+    );
   };
 
   const closeOrderModal = () => {
