@@ -1,4 +1,4 @@
-import { setCookie, getCookie } from './cookie';
+import { setCookie, getCookie, deleteCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
 
 const URL = process.env.BURGER_API_URL;
@@ -15,6 +15,16 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
+function saveTokens(accessToken: string, refreshToken: string) {
+  setCookie('accessToken', accessToken);
+  localStorage.setItem('refreshToken', refreshToken);
+}
+
+function removeTokens() {
+  deleteCookie('accessToken');
+  localStorage.removeItem('refreshToken');
+}
+
 export const refreshToken = (): Promise<TRefreshResponse> =>
   fetch(`${URL}/auth/token`, {
     method: 'POST',
@@ -30,8 +40,7 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem('refreshToken', refreshData.refreshToken);
-      setCookie('accessToken', refreshData.accessToken);
+      saveTokens(refreshData.accessToken, refreshData.refreshToken);
       return refreshData;
     });
 
@@ -153,8 +162,12 @@ export const registerUserApi = (data: TRegisterData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
+      if (!data?.success) {
+        return Promise.reject(data);
+      }
+
+      saveTokens(data.accessToken, data.refreshToken);
+      return data;
     });
 
 export type TLoginData = {
@@ -172,8 +185,12 @@ export const loginUserApi = (data: TLoginData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) return data;
-      return Promise.reject(data);
+      if (!data?.success) {
+        return Promise.reject(data);
+      }
+
+      saveTokens(data.accessToken, data.refreshToken);
+      return data;
     });
 
 export const forgotPasswordApi = (data: { email: string }) =>
@@ -232,4 +249,13 @@ export const logoutApi = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
     })
-  }).then((res) => checkResponse<TServerResponse<{}>>(res));
+  })
+    .then((res) => checkResponse<TServerResponse<{}>>(res))
+    .then((data) => {
+      if (!data?.success) {
+        return Promise.reject(data);
+      }
+
+      removeTokens();
+      return data;
+    });
